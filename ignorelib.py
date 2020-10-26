@@ -404,6 +404,10 @@ class IgnoreFilterManager(object):
         return None
 
     def walk(self, **kwargs):
+        """A wrapper for os.walk() without ignored files and subdirectories.
+        kwargs are passed to walk().
+        Directories with all contents ignored are skipped."""
+
         for dirpath, dirnames, filenames in os.walk(self.path, **kwargs):
             if dirpath == self.path:
                 rel_dirpath = ''
@@ -431,17 +435,17 @@ class IgnoreFilterManager(object):
 
     @classmethod
     def build(cls, path: str,
-            global_patterns: Iterable[Union[str, bytes]] = [],
             global_ignore_file_paths: Iterable[str] = [],
+            global_patterns: Iterable[Union[str, bytes]] = [],
             ignore_file_name: str = None,
             ignore_case: bool = False) -> 'IgnoreFilterManager':
         """Create a IgnoreFilterManager from patterns and paths.
         Args:
           path: The root path for ignore checks.
-          global_patterns: Global patterns to ignore.
           global_ignore_file_paths: A list of file paths to load patterns from.
               Relative paths are relative to the IgnoreFilterManager path, not
               the current directory.
+          global_patterns: Global patterns to ignore.
           ignore_file_name: The per-directory ignore file name.
           ignore_case: Whether to ignore case in matching.
         Returns:
