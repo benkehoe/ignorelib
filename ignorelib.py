@@ -405,8 +405,7 @@ class IgnoreFilterManager(object):
 
     def walk(self, **kwargs):
         """A wrapper for os.walk() without ignored files and subdirectories.
-        kwargs are passed to walk().
-        Directories with all contents ignored are skipped."""
+        kwargs are passed to walk()."""
 
         for dirpath, dirnames, filenames in os.walk(self.path, **kwargs):
             if dirpath == self.path:
@@ -427,9 +426,10 @@ class IgnoreFilterManager(object):
                 os.path.basename(f) for f in filenames if not self.is_ignored(os.path.join(rel_dirpath, f))
             ]
 
+            # removed this as os.walk visits empty directories
             # if nothing is left, don't visit
-            if not dirnames and not filenames:
-                continue
+            # if not dirnames and not filenames:
+            #     continue
 
             yield dirpath, dirnames, filenames
 

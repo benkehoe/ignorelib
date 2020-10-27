@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ignorelib"
-version = "0.2.0"
+version = "0.3.0"
 description = "Use the syntax and semantics of gitignore with custom ignore file names and locations"
 readme = "README.md"
 authors = ["Ben Kehoe <ben@kehoe.io>"]
